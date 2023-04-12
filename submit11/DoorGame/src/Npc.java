@@ -1,16 +1,17 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Npc implements PerTickofGame,Nonplayable {
 	private int npcId;
 	private String name;
-	private int[] coordination= new int[2];
-	private ArrayList<Affection> Affections= new ArrayList<>();
+	private int[] coordinate= new int[2];
+	private ArrayList<Affection> affections= new ArrayList<>();
 	
 	public Npc(int npcId,int[] coordination, ArrayList<Affection> affections) {
 		super();
 		this.npcId = npcId;
-		this.coordination = coordination;
-		Affections = affections;
+		this.coordinate = coordination;
+		this.affections = affections;
 	}
 	public int getNpcId() {
 		return npcId;
@@ -24,25 +25,40 @@ public class Npc implements PerTickofGame,Nonplayable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int[] getCoordination() {
-		return coordination;
+
+	public int[] getCoordinate() {
+		return coordinate;
 	}
-	public void setCoordination(int[] coordination) {
-		this.coordination = coordination;
+	public void setCoordinate(int[] coordinate) {
+		this.coordinate = coordinate;
 	}
-	public ArrayList<Affection> getAffections() {
-		return Affections;
+	public ArrayList<Affection> getaffections() {
+		return affections;
 	}
-	public void setAffections(ArrayList<Affection> affections) {
-		Affections = affections;
+	public void setaffections(ArrayList<Affection> affections) {
+		this.affections = affections;
 	}
 
 	public void perTurn() {
 		
 	}
-	public Nonplayable returnAddress() {
+	@Override
+	public String toString() {
+		return "Npc [npcId=" + npcId + ", name=" + name + ", coordinate=" + Arrays.toString(coordinate)
+				+ ", affections=" + affections + "]";
+	}
 
-		return null;
+	public int[] getWhere() {
+		// TODO Auto-generated method stub
+		return coordinate;
+	}
+	
+	public Npc copy() {
+		ArrayList<Affection> returnAffection = new ArrayList<>();
+		for(Affection a : affections) {
+			returnAffection.add(a.copy());
+		}
+		return new Npc(npcId,new int[] {coordinate[0],coordinate[1]},returnAffection);
 	}
 
 }

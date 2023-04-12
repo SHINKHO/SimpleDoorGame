@@ -1,6 +1,7 @@
 
 public interface Nonplayable extends PerTickofGame {
 	
-	public abstract Nonplayable returnAddress();
+	public abstract int[] getWhere();
+	public abstract Nonplayable copy();
 	
 }

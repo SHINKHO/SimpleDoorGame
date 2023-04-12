@@ -1,28 +1,33 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Location implements Nonmovable,PerTickofGame {
+public class Location implements Nonmovable,PerTickofGame,Nonplayable {
 	
 	private int locationId;
+	private String locationName;
+
 	private int counter;
 	private int[] coordinate = new int [2]; /* {x,y}*/
 	private int pop;
-	private int hpConsumed;
+	private int goldCost;
 	private int misfortune;
 	private int timeRequried;
 	private ArrayList<Npc> npcStayIn;
 	
-	public Location(int locationId, int counter, int[] coordinate, int pop, int hpConsumed, int misfortune,
-			int timeRequried,ArrayList<Npc> npcStayIn) {
+	public Location() {
+		
+	}
+	public Location(int locationId,String locationName, int counter, int[] coordinate, int pop, int goldCost, int misfortune,
+			int timeRequried) {
 		super();
 		this.locationId = locationId;
+		this.locationName = locationName;
 		this.counter = counter;
 		this.coordinate = coordinate;
 		this.pop = pop;
-		this.hpConsumed = hpConsumed;
+		this.goldCost = goldCost;
 		this.misfortune = misfortune;
 		this.timeRequried = timeRequried;
-		this.npcStayIn = npcStayIn;
 	}
 	//getters and setters
 	public ArrayList<Npc> getNpcStayIn() {
@@ -68,15 +73,6 @@ public class Location implements Nonmovable,PerTickofGame {
 	public void setPop(int pop) {
 		this.pop = pop;
 	}
-
-	public int getHpConsumed() {
-		return hpConsumed;
-	}
-
-	public void setHpConsumed(int hpConsumed) {
-		this.hpConsumed = hpConsumed;
-	}
-
 	public int getMisfortune() {
 		return misfortune;
 	}
@@ -92,16 +88,48 @@ public class Location implements Nonmovable,PerTickofGame {
 	public void setTimeRequried(int timeRequried) {
 		this.timeRequried = timeRequried;
 	}
+	public String getLocationName() {
+		return locationName;
+	}
+	public void setLocationName(String locationName) {
+		this.locationName = locationName;
+	}
+	
+	public int getGoldCost() {
+		return goldCost;
+	}
+	public void setGoldCost(int goldCost) {
+		this.goldCost = goldCost;
+	}
+	public void addNpc(Npc npc) {
+		npcStayIn.add(npc);
+	}
+	
+	public Npc getNpc(Npc npc) {
+		for(int i = 0 ;i<npcStayIn.size();i++) {
+			if(npcStayIn.get(i).getNpcId()==npc.getNpcId()) {
+				return npcStayIn.remove(i);
+			}
+		}
+		return null;
+	}
 	
 	@Override
 	public String toString() {
-		return "Location [locationId=" + locationId + ", counter=" + counter + ", coordinate="
-				+ Arrays.toString(coordinate) + ", pop=" + pop + ", hpConsumed=" + hpConsumed + ", misfortune="
+		return "Location [locationId=" + locationId + locationName + ", locationName=" +", counter=" + counter + ", coordinate="
+				+ Arrays.toString(coordinate) + ", pop=" + pop + ", goldCost=" + goldCost + ", misfortune="
 				+ misfortune + ", timeRequried=" + timeRequried + ", npcStayIn=" + npcStayIn + "]";
 	}
 	@Override
 	public int findDistance(int[] dest) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public int[] getWhere() {
+		return coordinate;
+	}
+	public Location copy() {
+		return new Location(locationId,locationName,counter,new int[]{coordinate[0],coordinate[1]},pop,goldCost,misfortune,timeRequried);
 	}
 }

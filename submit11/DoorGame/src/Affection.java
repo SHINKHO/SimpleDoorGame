@@ -22,6 +22,9 @@ public class Affection {
 	public String toString() {
 		return "Affection [type=" + type + ", number=" + number + "]";
 	}
+	public Affection copy() {
+		return new Affection(type,number);
+	}
 	
 	
 }
