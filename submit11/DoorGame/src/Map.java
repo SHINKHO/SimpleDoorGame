@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Map {
 	private ArrayList<Location> locations = new ArrayList<>();
@@ -15,13 +16,43 @@ public class Map {
 		return instance;
 	}
 	
-	public void addNpc(Npc npc) {
+	public void addNpc(Npc npc,int[] coordi) {
+		for(int i = 0 ; i<locations.size();i++) {
+			if(coordi[0]==locations.get(i).getWhere()[0]&&
+				coordi[1]==locations.get(i).getWhere()[1]) {			
+				npc.setLocationinstance(locations.get(i));
+				locations.get(i).addNpc(npc);
+			}
+		}
 		this.npcs.add(npc);
 	}
-	public void addNpc(ArrayList<Npc> npcs){
-		for(Npc n: npcs) {
-			this.npcs.add(n);
+	public void matchNpc(Npc npc) {
+		for(int i = 0 ; i<locations.size();i++) {
+			if(npc.getWhere()[0]==locations.get(i).getWhere()[0]&&
+					npc.getWhere()[1]==locations.get(i).getWhere()[1]) {
+				npc.setLocationinstance(locations.get(i));
+				locations.get(i).addNpc(npc);
+			}
 		}
+		
+	}
+	
+	//printing of giving user a msg that could be helpful to the shit 
+	public String getInfoOf(int[] coordi){
+		String returnString="";
+		for(Location l : locations) {
+			if(l.getCoordinate()[0]==coordi[0]&&l.getCoordinate()[1]==coordi[1]) {
+				returnString +=l.toString();
+				for(Npc n : npcs) {
+					if(n.getLocationinstance()==l) {
+						returnString+=n.toString();
+					}
+				}
+				return returnString;
+			}
+		}
+		return null;
+		
 	}
 	
 	/**
@@ -78,7 +109,7 @@ public class Map {
 		if(findMaxLocation())System.out.println("due to adding new location, new max Coordination is set x:"+maxCoordinate[0]+" y:"+maxCoordinate[1]);
 	}
 	
-	public Location[] getLocations(){
+	public Location[] getCopiedLocations(){
 		Location[] returnArray = new Location[locations.size()];
 		for(int i = 0 ; i<returnArray.length;i++) {
 			returnArray[i] = locations.get(i).copy();
@@ -96,6 +127,12 @@ public class Map {
 
 	public ArrayList<Npc> getNpcs() {
 		return npcs;
+	}
+	public Location getLocationInstanceAt(int[] coordi) {
+		for(int i =0; i<locations.size();i++) {
+			if(locations.get(i).getWhere()[0]==coordi[0]&&locations.get(i).getWhere()[1]==coordi[1])return locations.get(i); 
+		}
+		return null;
 	}
 
 	public int[] getMaxCoordinate() {

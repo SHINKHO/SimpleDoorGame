@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class View {
 	private int curMax[] = new int[2];
 	private int curMin[] = new int[2];
-	private int playerAt[] = new int[2];
+	private int playerAt[] = new int[]{-1,-1};
 	private ArrayList<Nonplayable> spot = new ArrayList<>();
 	int scale = 1;
 	
@@ -12,8 +12,17 @@ public class View {
 		this.curMax = curMax;
 	}
 	
-	public void addSpots(Nonplayable newLoc) {
+	public void addSpot(Nonplayable newLoc) {
 		spot.add(newLoc);
+	}
+	public void addSpots(Nonplayable[] newLocs) {
+		for(int i = 0; i<newLocs.length; i++) {
+			spot.add(newLocs[i]);
+		}
+	}
+	public void setPlayerAt(int[] coordi) {
+		playerAt[0]= coordi[0];
+		playerAt[1]= coordi[1];
 	}
 	
 	// TODO something doens't got well,
@@ -31,12 +40,12 @@ public class View {
 			vacantFromYNote+=" ";
 		}
 		
-		for(int y=curMin[1];y<curMax[1];y++) {
+		for(int y=curMax[1];y>=curMin[1];y--) {
 			//y printer
 			System.out.print(y);
 			//space from y note to the map calculator
 			String spacer = ""; int spacerCount=0;
-			int tempY=y+1;
+			int tempY=y;
 			
 			for(int i=0;i<vacantNumFromYNote&&tempY/10!=0;i++) {
 				spacerCount++;
@@ -47,10 +56,22 @@ public class View {
 			}
 			System.out.print(spacer);
 			//x printer
-			for(int x=curMin[0];x<curMax[0];x++) {
+ 			for(int x=curMin[0];x<curMax[0];x++) {
 				// TODO change the print x to per type of object
-				System.out.print('x');
-				if(y==0)lastLineofX+=(x)%10;
+  				int numInThere=0;
+ 					for(Nonplayable n : spot) {
+						if(n.getWhere()[0]==x&&n.getWhere()[1]==y) { // this should be changed per ranged like if the salce is 2 , 1 to 10 , spot at 1 and 2 is grouped together
+							numInThere++; 
+						}
+					}
+ 				if(playerAt[0]==x&&playerAt[1]==y) {
+ 					System.out.print("P");
+ 				}else if(numInThere >0) {
+ 					System.out.print(numInThere);
+ 				}else {
+ 					System.out.print("-");
+ 				}
+ 				if(y==0)lastLineofX+=(x)%10;
 			}
 			System.out.println();
 		}
@@ -73,6 +94,7 @@ public class View {
                 System.out.print(" ");
             }
 		}
+		System.out.println();
 	}
 
 }

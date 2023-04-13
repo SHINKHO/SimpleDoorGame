@@ -4,15 +4,30 @@ import java.util.Arrays;
 public class Npc implements PerTickofGame,Nonplayable {
 	private int npcId;
 	private String name;
-	private int[] coordinate= new int[2];
+	private Location locationInstance;
 	private ArrayList<Affection> affections= new ArrayList<>();
+	private String comment = "";
 	
-	public Npc(int npcId,int[] coordination, ArrayList<Affection> affections) {
+	public Npc(int npcId,String name, ArrayList<Affection> affections,String comment) {
 		super();
+		this.name = name;
 		this.npcId = npcId;
-		this.coordinate = coordination;
 		this.affections = affections;
+		this.comment = comment;
 	}
+	public Npc(int npcId,String name,String comment) {
+		super();
+		this.name = name;
+		this.npcId = npcId;
+		this.comment = comment;
+	}
+	public Location getLocationinstance() {
+		return this.locationInstance;
+	}
+	public void setLocationinstance(Location locationInstance) {
+		this.locationInstance = locationInstance;
+	}
+	
 	public int getNpcId() {
 		return npcId;
 	}
@@ -25,12 +40,11 @@ public class Npc implements PerTickofGame,Nonplayable {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public int[] getCoordinate() {
-		return coordinate;
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
-	public void setCoordinate(int[] coordinate) {
-		this.coordinate = coordinate;
+	public String getCommnet() {
+		return this.comment;
 	}
 	public ArrayList<Affection> getaffections() {
 		return affections;
@@ -44,13 +58,17 @@ public class Npc implements PerTickofGame,Nonplayable {
 	}
 	@Override
 	public String toString() {
-		return "Npc [npcId=" + npcId + ", name=" + name + ", coordinate=" + Arrays.toString(coordinate)
-				+ ", affections=" + affections + "]";
+		if(locationInstance !=null) {
+		return "Npc [npcId=" + npcId + ", name=" + name + ", coordinate=" + Arrays.toString(locationInstance.getWhere())
+				+ ", affections=" + affections + "]"+"\n comment ["+comment+"]" ;
+		}else {
+		return "Npc [npcId=" + npcId + ", name=" + name + ", coordinate=" + null
+		+ ", affections=" + affections + "]"+"\n comment ["+comment+"]" ;
+		}
 	}
 
 	public int[] getWhere() {
-		// TODO Auto-generated method stub
-		return coordinate;
+		return locationInstance.getWhere();
 	}
 	
 	public Npc copy() {
@@ -58,7 +76,7 @@ public class Npc implements PerTickofGame,Nonplayable {
 		for(Affection a : affections) {
 			returnAffection.add(a.copy());
 		}
-		return new Npc(npcId,new int[] {coordinate[0],coordinate[1]},returnAffection);
+		return new Npc(npcId,name,returnAffection,comment);
 	}
 
 }
