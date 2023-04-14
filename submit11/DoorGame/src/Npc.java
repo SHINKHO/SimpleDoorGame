@@ -7,6 +7,7 @@ public class Npc implements PerTickofGame,Nonplayable {
 	private Location locationInstance;
 	private ArrayList<Affection> affections= new ArrayList<>();
 	private String comment = "";
+	private boolean hidden = true;
 	
 	public Npc(int npcId,String name, ArrayList<Affection> affections,String comment) {
 		super();
@@ -20,6 +21,15 @@ public class Npc implements PerTickofGame,Nonplayable {
 		this.name = name;
 		this.npcId = npcId;
 		this.comment = comment;
+	}
+	public void hideNpc() {
+		this.hidden = true;
+	}
+	public void revealNpc() {
+		this.hidden = false;
+	}
+	public boolean isHidden() {
+		return this.hidden;
 	}
 	public Location getLocationinstance() {
 		return this.locationInstance;

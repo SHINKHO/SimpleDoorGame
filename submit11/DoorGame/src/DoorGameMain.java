@@ -3,8 +3,41 @@ import java.util.ArrayList;
 public class DoorGameMain {
 
 	public static void main(String[] args) {
-		// TODO 
-		GameControl gc = new GameControl(Map.getInstance());
+		Map map = Map.getInstance();
+		for(Nonplayable l : map.getCopiedLocations()) {
+		System.out.println(l.toString());
+		}
+		
+
+		GameControl gc = new GameControl(map);
+		
+		int selection=-1;
+		boolean isplayerset=false;
+		while(true) {
+			if(isplayerset == false) {
+				gc.setPlayer();
+				isplayerset=true;
+			}
+			if(gc.isAdmin()) {
+				selection = gc.adminMenu();
+				switch(selection) {
+					case 1:	break;
+					case 2:	break;
+					case 3:	break;
+					default : System.exit(0);
+				}
+			}else {
+				selection = gc.userMenu();
+				switch(selection) {
+					case 1:	gc.user_viewMap();break;
+					case 2:	gc.user_move();break;
+					case 3:	break;
+					default : System.exit(0);
+				}	
+			}
+			
+		}	
+		//어드민 메뉴 물어보기
 		/*테스트하던 라인
 		Map map = Map.getInstance();
 		map.addLocation(new Location(0,"테스트용",100, new int[] {2,2}, 100, 5, 10,30));

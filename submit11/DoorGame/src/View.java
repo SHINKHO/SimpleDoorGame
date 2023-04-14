@@ -15,10 +15,8 @@ public class View {
 	public void addSpot(Nonplayable newLoc) {
 		spot.add(newLoc);
 	}
-	public void addSpots(Nonplayable[] newLocs) {
-		for(int i = 0; i<newLocs.length; i++) {
-			spot.add(newLocs[i]);
-		}
+	public void addSpots(ArrayList<Nonplayable> newLocs) {
+		for(Nonplayable n : newLocs) spot.add(n);
 	}
 	public void setPlayerAt(int[] coordi) {
 		playerAt[0]= coordi[0];
@@ -80,7 +78,7 @@ public class View {
 		//the 10th things
 		System.out.print(vacantFromYNote);
 
-		for(int i=0; i<=curMax[0];i+=10) {
+		for(int i=curMin[0]; i<=curMax[0];i+=10) {
 			int numDigits=1;int tempI=i;
 			while(tempI>9) {
 				tempI/=10;

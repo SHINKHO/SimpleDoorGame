@@ -109,10 +109,10 @@ public class Map {
 		if(findMaxLocation())System.out.println("due to adding new location, new max Coordination is set x:"+maxCoordinate[0]+" y:"+maxCoordinate[1]);
 	}
 	
-	public Location[] getCopiedLocations(){
-		Location[] returnArray = new Location[locations.size()];
-		for(int i = 0 ; i<returnArray.length;i++) {
-			returnArray[i] = locations.get(i).copy();
+	public ArrayList<Nonplayable> getCopiedLocations(){
+		ArrayList<Nonplayable> returnArray = new ArrayList<>();
+		for(Location l : this.locations) {
+			returnArray.add(l.copy());
 		}
 		return returnArray;
 	}
